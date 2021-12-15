@@ -8,6 +8,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^2.4.0",
+    "@supabase/supabase-js": "^1.28.5",
+    "jsonwebtoken": "^8.5.1",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2"
