@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 //   "/foo/[...bar]"  for pages/foo/[...bar].js
 const publicPages = [];
 
-function MyApp({ Component, pageProps }) {
+function ClerkSupabaseApp({ Component, pageProps }) {
   // Get the pathname
   const { pathname } = useRouter();
 
@@ -42,4 +42,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default ClerkSupabaseApp;

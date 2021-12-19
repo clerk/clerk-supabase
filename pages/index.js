@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import { useUser, UserButton } from "@clerk/nextjs";
-import { createTodo, getTodos } from "../utils/supabase";
+import { createTodo, getTodos } from "../supabase";
+import Image from "next/image";
 
 export default function Home() {
   const [todos, setTodos] = useState(null);
@@ -30,7 +31,12 @@ export default function Home() {
   return (
     <>
       <header className={styles.header}>
-        <div>Clerk + Supabase</div>
+        <Image
+          src="/clerkandsupa.svg"
+          alt="clerk+supa"
+          width={100}
+          height={50}
+        />
         <UserButton />
       </header>
       <main className={styles.main}>
