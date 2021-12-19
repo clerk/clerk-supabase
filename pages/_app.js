@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import GithubLink from "../components/clerk/GithubLink.tsx";
 import {
   ClerkProvider,
   SignedIn,
@@ -38,6 +39,13 @@ function ClerkSupabaseApp({ Component, pageProps }) {
           </SignedOut>
         </>
       )}
+
+      <footer>
+        <GithubLink
+          label="'Clerk+Supabase' showcases Clerk components w/ a Supabase backend"
+          repoLink="https://github.com/clerkinc/clerk-supabase"
+        />
+      </footer>
     </ClerkProvider>
   );
 }
