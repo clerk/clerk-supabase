@@ -8,7 +8,11 @@ type GithubLinkProps = {
 const GithubLink = (props: GithubLinkProps) => (
   <>
     <div className={styles.container}>
-      <a className={styles.logo} href="https://www.clerk.dev" target="blank">
+      <a
+        className={styles.logo}
+        href="https://www.clerk.dev?utm_source=example-app&utm_medium=clerk-footer&utm_campaign=supabase"
+        target="blank"
+      >
         <Image src="/clerk.svg" alt="clerk" width="56" height="16" priority />
       </a>
       <div className={styles.label}>{props.label}</div>
