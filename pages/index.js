@@ -48,7 +48,7 @@ export default function Home() {
             {todos?.length > 0 ? (
               <ol>
                 {todos.map((todo) => (
-                  <li key={todo.id}>{todo.content}</li>
+                  <li key={todo.id}>{todo.title}</li>
                 ))}
               </ol>
             ) : (
