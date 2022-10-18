@@ -9,18 +9,15 @@ import {
 } from "@clerk/nextjs";
 import { createClient } from "@supabase/supabase-js";
 
+
 const supabaseClient = async (supabaseAccessToken) => {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_KEY
-  );
-
-  // set Supabase JWT on the client object,
-  // so it is sent up with all Supabase requests
-  supabase.auth.setAuth(supabaseAccessToken);
-
-  return supabase;
-};
+    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_KEY, {
+      global: { headers: { Authorization: `Bearer ${supabaseAccessToken}` } },
+    });
+    // set Supabase JWT on the client object,
+    // so it is sent up with all Supabase requests
+    return supabase;
+  };
 
 export default function Home() {
   const { isSignedIn, isLoading, user } = useUser();
@@ -132,7 +129,7 @@ function AddTodoForm({ todos, setTodos }) {
     const supabase = await supabaseClient(supabaseAccessToken);
     const { data } = await supabase
       .from("todos")
-      .insert({ title: newTodo, user_id: session.user.id });
+      .insert({ title: newTodo, user_id: session.user.id }).select();
 
     setTodos([...todos, data[0]]);
     setNewTodo("");
