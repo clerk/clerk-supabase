@@ -1,10 +1,10 @@
-import styles from "./GithubLink.module.css";
-import Image from "next/image";
+import styles from './GithubLink.module.css'
+import Image from 'next/image'
 
 type GithubLinkProps = {
-  label: string;
-  repoLink: string;
-};
+  label: string
+  repoLink: string
+}
 const GithubLink = (props: GithubLinkProps) => (
   <>
     <div className={styles.container}>
@@ -26,6 +26,6 @@ const GithubLink = (props: GithubLinkProps) => (
       </div>
     </div>
   </>
-);
+)
 
-export default GithubLink;
+export default GithubLink

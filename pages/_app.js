@@ -1,6 +1,6 @@
-import "../styles/globals.css";
-import GithubLink from "../components/clerk/GithubLink.tsx";
-import { ClerkProvider } from "@clerk/nextjs";
+import '../styles/globals.css'
+import GithubLink from '../components/clerk/GithubLink.tsx'
+import { ClerkProvider } from '@clerk/nextjs'
 
 function ClerkSupabaseApp({ Component, pageProps }) {
   return (
@@ -13,7 +13,7 @@ function ClerkSupabaseApp({ Component, pageProps }) {
         />
       </footer>
     </ClerkProvider>
-  );
+  )
 }
 
-export default ClerkSupabaseApp;
+export default ClerkSupabaseApp

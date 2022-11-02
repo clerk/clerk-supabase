@@ -1,27 +1,30 @@
-import styles from "../styles/Home.module.css";
-import { useState, useEffect } from "react";
+import styles from '../styles/Home.module.css'
+import { useState, useEffect } from 'react'
 import {
   useSession,
   useUser,
   UserButton,
   SignInButton,
-  SignUpButton,
-} from "@clerk/nextjs";
-import { createClient } from "@supabase/supabase-js";
+  SignUpButton
+} from '@clerk/nextjs'
+import { createClient } from '@supabase/supabase-js'
 
-
-const supabaseClient = async (supabaseAccessToken) => {
-    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_KEY, {
-      global: { headers: { Authorization: `Bearer ${supabaseAccessToken}` } },
-    });
-    // set Supabase JWT on the client object,
-    // so it is sent up with all Supabase requests
-    return supabase;
-  };
+const supabaseClient = async supabaseAccessToken => {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_KEY,
+    {
+      global: { headers: { Authorization: `Bearer ${supabaseAccessToken}` } }
+    }
+  )
+  // set Supabase JWT on the client object,
+  // so it is sent up with all Supabase requests
+  return supabase
+}
 
 export default function Home() {
-  const { isSignedIn, isLoading, user } = useUser();
-  const [todos, setTodos] = useState(null);
+  const { isSignedIn, isLoading, user } = useUser()
+  const [todos, setTodos] = useState(null)
   return (
     <>
       <Header />
@@ -45,11 +48,11 @@ export default function Home() {
         </main>
       )}
     </>
-  );
+  )
 }
 
 const Header = () => {
-  const { isSignedIn } = useUser();
+  const { isSignedIn } = useUser()
 
   return (
     <header className={styles.header}>
@@ -64,36 +67,36 @@ const Header = () => {
         </div>
       )}
     </header>
-  );
-};
+  )
+}
 
 const TodoList = ({ todos, setTodos }) => {
-  const { session } = useSession();
-  const [loadingTodos, setLoadingTodos] = useState(true);
+  const { session } = useSession()
+  const [loadingTodos, setLoadingTodos] = useState(true)
 
   // on first load, fetch and set todos
   useEffect(() => {
     const loadTodos = async () => {
       try {
-        setLoadingTodos(true);
+        setLoadingTodos(true)
         const supabaseAccessToken = await session.getToken({
-          template: "Supabase",
-        });
-        const supabase = await supabaseClient(supabaseAccessToken);
-        const { data: todos } = await supabase.from("todos").select("*");
-        setTodos(todos);
+          template: 'Supabase'
+        })
+        const supabase = await supabaseClient(supabaseAccessToken)
+        const { data: todos } = await supabase.from('todos').select('*')
+        setTodos(todos)
       } catch (e) {
-        alert(e);
+        alert(e)
       } finally {
-        setLoadingTodos(false);
+        setLoadingTodos(false)
       }
-    };
-    loadTodos();
-  }, []);
+    }
+    loadTodos()
+  }, [])
 
   // if loading, just show basic message
   if (loadingTodos) {
-    return <div className={styles.label}>Loading...</div>;
+    return <div className={styles.label}>Loading...</div>
   }
 
   // display all the todos
@@ -102,43 +105,44 @@ const TodoList = ({ todos, setTodos }) => {
       {todos?.length > 0 ? (
         <div className={styles.todoList}>
           <ol>
-            {todos.map((todo) => (
+            {todos.map(todo => (
               <li key={todo.id}>{todo.title}</li>
             ))}
           </ol>
         </div>
       ) : (
-        <div className={styles.label}>You don't have any todos!</div>
+        <div className={styles.label}>You don&apos;t have any todos!</div>
       )}
     </>
-  );
-};
+  )
+}
 
 function AddTodoForm({ todos, setTodos }) {
-  const { session } = useSession();
-  const [newTodo, setNewTodo] = useState("");
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (newTodo === "") {
-      return;
+  const { session } = useSession()
+  const [newTodo, setNewTodo] = useState('')
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if (newTodo === '') {
+      return
     }
 
     const supabaseAccessToken = await session.getToken({
-      template: "Supabase",
-    });
-    const supabase = await supabaseClient(supabaseAccessToken);
+      template: 'Supabase'
+    })
+    const supabase = await supabaseClient(supabaseAccessToken)
     const { data } = await supabase
-      .from("todos")
-      .insert({ title: newTodo, user_id: session.user.id }).select();
+      .from('todos')
+      .insert({ title: newTodo, user_id: session.user.id })
+      .select()
 
-    setTodos([...todos, data[0]]);
-    setNewTodo("");
-  };
+    setTodos([...todos, data[0]])
+    setNewTodo('')
+  }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input onChange={(e) => setNewTodo(e.target.value)} value={newTodo} />
+      <input onChange={e => setNewTodo(e.target.value)} value={newTodo} />
       &nbsp;<button>Add Todo</button>
     </form>
-  );
+  )
 }
